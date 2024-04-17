@@ -37,7 +37,7 @@ Test in another Terminal:
 rclone mount remote: /your/path --allow-other --allow-non-empty --vfs-cache-mode writes
 ```
 
-when you get these error:
+when you get these error (in Proxmox LXC you must checked FUSE in Container->Options->Features):
 ```
 Fatal error: failed to mount FUSE fs: fusermount: exec: "fusermount3": executable file not found in $PATH
 ```
@@ -55,19 +55,23 @@ nano /usr/lib/systemd/system/rclone.service
 ```
 ```
 [Unit]
-Description=rclone 
+Description=rclone
+AssertPathIsDirectory=/your/path
+After=networking.service
 
 [Service]
 User=root
-ExecStart=/usr/bin/rclone mount remote: /your/path --allow-other --allow-non-empty --vfs-cache-mode writes
-Restart=on-abort
+ExecStart=/usr/bin/rclone mount --config=/root/.config/rclone/rclone.conf remote: /your/path --allow-other --allow-non-empty --vfs-cache-mode writes
+ExecStop=/bin/fusermount -u /your/path
+Restart=always
+RestartSec=10
 
- 
+
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
 ```
 ### Start the service and enable service to start with system:
 ```
-systemctl start rclone
-systemctl enable rclone
+systemctl start rclone.service
+systemctl enable rclone.service
 ```
