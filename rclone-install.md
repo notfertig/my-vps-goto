@@ -6,8 +6,7 @@ my rclone install steps
 
 #### Step 1
 ```
-apt update -y && apt upgrade -y
-apt install wget unzip screen fuse
+apt update -y && apt upgrade -y && apt install wget unzip screen fuse3 -y
 ```
 #### Step 2
 
@@ -35,16 +34,6 @@ fusermount -qzu /your/path
 Test in another Terminal:
 ```
 rclone mount remote: /your/path --allow-other --allow-non-empty --vfs-cache-mode writes
-```
-
-when you get these error (in Proxmox LXC you must checked FUSE in Container->Options->Features):
-```
-Fatal error: failed to mount FUSE fs: fusermount: exec: "fusermount3": executable file not found in $PATH
-```
-
-install fuse3 and try again
-```
-apt install fuse3
 ```
 
 ## Make it become service to start with system
