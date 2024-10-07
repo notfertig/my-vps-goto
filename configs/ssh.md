@@ -1,19 +1,10 @@
 
 # Generate SSH-Keygen:
-ssh-keygen -t ed25519 -C "user@host or email"
-
-# creating a SSH config-file for easy access to your remote servers
-create a new file with the name _config_ in the .ssh folder of your host and copy&paste the follow lines 
-
 ```
-Host Hostname
-    HostName IPAdress
-    Port 22
-    User Username
-    IdentityFile ~/.ssh/yourprivatekey #optional for passwordless login follow the steps below
-```    
+ssh-keygen -t ed25519 -C "user@host or email"
+```
 
-
+# Edit your _sshd_config_
 1. connect with your remote server
 2. go to the ".ssh" folder (not exist create with "mkdir .ssh")
 3. typ in "touch authorized_keys"
@@ -29,3 +20,16 @@ Host Hostname
 ssh-copy-id -i ~/.ssh/yourkey -p 22 username@serveradress
 ``` 
 This will add automaticle yout key to your server 
+
+
+
+# SSH config-file for easy access to your remote
+create a new file with the name _config_ in the .ssh folder of your host and copy&paste the follow lines 
+
+```
+Host Hostname
+    HostName IPAdress
+    Port 22
+    User Username
+    IdentityFile ~/.ssh/yourprivatekey #optional for passwordless login follow the steps below
+```    

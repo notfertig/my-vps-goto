@@ -1,6 +1,4 @@
-# rclone-install
-my rclone install steps
-
+# RClone
 
 ## Installation
 
